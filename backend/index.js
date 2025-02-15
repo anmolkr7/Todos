@@ -49,11 +49,14 @@ app.put('/completed',async (req,res)=>{
         })
         return;
     }
-    await todo.update({
+    const result=await todo.updateOne({
         _id:req.body.id
     },{
-        completed:true
+        $set:{completed:true}
     })
+    if (result.modifiedCount === 0) {
+        return res.status(404).json({ message: "Todo not found or already completed" });
+    }
     res.json({
         message:"Todo marked as completed"
     })
