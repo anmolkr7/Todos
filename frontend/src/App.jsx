@@ -11,7 +11,7 @@ function App() {
     const fetchTodos = async () => {
       try {
         const response = await axios.get("http://localhost:3000/todos") // Replace with actual API URL
-        setTodos(response.data);
+        setTodos(response.data.todos);
       } catch (error) {
         console.error("Error fetching todos:", error);
       }
