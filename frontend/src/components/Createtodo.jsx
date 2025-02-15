@@ -1,6 +1,6 @@
 import { useState } from "react"
-
-export function CreateTodo(){
+import axios  from "axios"
+export function CreateTodo({setTodos}){
     const [title,setTitle]=useState("")
     const[description,setDescription]=useState("")
     const addTodo = async () => {
@@ -10,11 +10,10 @@ export function CreateTodo(){
         }
     
         try {
-          const response = await axios.post("http://localhost:5000/api/todos", {
+          const response = await axios.post("http://localhost:3000/todos", {
             title,
             description,
           });
-    
           setTodos((prevTodos) => [...prevTodos, response.data]); // Update UI
           setTitle(""); // Clear inputs
           setDescription("");
