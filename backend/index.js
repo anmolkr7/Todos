@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const { createTodo, updateTodo } = require('./types');
 const { todo } = require('./database');
@@ -23,21 +24,19 @@ app.post('/todos', async(req, res) => {
         return;
     }
     //put it in mongodb
-    await todo.create({
+    const newTodo=await todo.create({
         title:createpayload.title,
         description:createpayload.description,
         completed:false
     })
-    res.json({
-        Message:"Todo Created"
-    })
+    res.json(newTodo)
 });
 
 app.get('/todos',async(req,res)=>{
     const todos=await todo.find();
-    res.json({
-        todos
-    })
+    res.json(
+       { todos}
+    )
 })
 
 app.put('/completed',async (req,res)=>{
