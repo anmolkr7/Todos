@@ -1,5 +1,6 @@
 const express = require('express');
 const { createTodo, updateTodo } = require('./types');
+const { todo } = require('./database');
 const app = express();
 const PORT = 3000;
 app.use(express.json());
@@ -10,7 +11,7 @@ title:string
 description:string
 }
 */
-app.post('/todos', (req, res) => {
+app.post('/todos', async(req, res) => {
     const createpayload=req.body;
     const parsedpayload=createTodo.safeParse(createpayload);
     if(!parsedpayload.success)
@@ -21,13 +22,24 @@ app.post('/todos', (req, res) => {
         return;
     }
     //put it in mongodb
+    await todo.create({
+        title:createpayload.title,
+        description:createpayload.description,
+        completed:false
+    })
+    res.json({
+        Message:"Todo Created"
+    })
 });
 
-app.get('/todos',(req,res)=>{
-
+app.get('/todos',async(req,res)=>{
+    const todos=await todo.find();
+    res.json({
+        todos
+    })
 })
 
-app.put('/completed',(req,res)=>{
+app.put('/completed',async (req,res)=>{
     const updatePayload=req.body;
     const parsedupdatepayload=updateTodo.safeParse(updatePayload);
     if(!parsedupdatepayload.success)
@@ -37,6 +49,14 @@ app.put('/completed',(req,res)=>{
         })
         return;
     }
+    await todo.update({
+        _id:req.body.id
+    },{
+        completed:true
+    })
+    res.json({
+        message:"Todo marked as completed"
+    })
 })
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
