@@ -8,6 +8,36 @@ import axios from "axios"
 function App() {
   const [todos, setTodos] = useState([])
    // useEffect hook to fetch data when the component mounts
+   /*
+   useEffect is a React Hook that lets you perform side effects in function components. 
+   Side effects include data fetching, subscriptions, manually changing the DOM, and setting up 
+   timers.
+   useEffect(() => {
+    // Side effect code here
+
+    return () => {
+        // Cleanup function (optional)
+    };
+    }, [dependencies]);
+    Runs after render: useEffect runs after the component renders.
+    Dependency Array:
+    [] (empty) → Runs only once after the first render.
+    [dependency] → Runs when dependency changes.
+    No array → Runs after every render.
+    Cleanup Function: Used for removing event listeners, clearing timers, unsubscribing, etc.
+
+    In React, mounting refers to the process of adding (rendering) a component to the DOM for the 
+    first time.s
+    React Component Lifecycle Phases
+    Mounting → When the component is first inserted into the DOM.
+    Updating → When the component re-renders due to state/prop changes. has some dependency
+    Unmounting → When the component is removed from the DOM. i.e using Cleanup Function inside useEffect
+
+
+    When Does useEffect Run on Mount?
+    If you pass an empty dependency array [] to useEffect, it runs only once when the component mounts.
+
+   */
   useEffect(() => {
     const fetchTodos = async () => {
       try {
