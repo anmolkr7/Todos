@@ -36,8 +36,13 @@ function App() {
 
     When Does useEffect Run on Mount?
     If you pass an empty dependency array [] to useEffect, it runs only once when the component mounts.
-
-   */
+    
+    NOTE:-
+    React expects useEffect's callback to be synchronous or return a cleanup function, but async 
+    functions always return a Promise. So fetching and all has to be done using promise syntax i.e then and catch
+    To by pass it, the callback(i.e the first parameter of useEffect) of useEffect defines another function and this function can be async
+    as shown in code below
+    */
   useEffect(() => {
     const fetchTodos = async () => {
       try {
